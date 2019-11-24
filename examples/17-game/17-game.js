@@ -110,4 +110,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const app = new App(canvas);
     const gui = new dat.GUI();
     gui.add(app, 'enableCamera');
+
+    const audio1 = document.getElementById("audio1");
+    const audio2 = document.getElementById("audio2");
+    audio1.muted = true; 
+    audio2.muted = true;
+    audio1.volume = 0.5;
+    audio2.volume = 0.2;
+    audio1.play();
+    audio2.play();
+    audio1.muted = false;
+    audio2.muted = false;
 });
