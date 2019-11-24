@@ -6,8 +6,10 @@ import Camera from './Camera.js';
 import Planet from './Planet.js';
 import SceneLoader from './SceneLoader.js';
 import SceneBuilder from './SceneBuilder.js';
-
+const planets = [];
 class App extends Application {
+
+    
 
     start() {
         const gl = this.gl;
@@ -37,14 +39,14 @@ class App extends Application {
             }
         });
 
-        //find first planet
-        this.planet = null;
-        this.scene.traverse(node => {
-            if (node instanceof Planet) {
-                this.planet = node;
-                //console.log("najden planet s translacijo" + this.planet.translation);
+        //nafila array "planeti" s vsemi nodi v sceni k so tipa "planet"
+        var i;
+        for(i in this.scene.nodes){
+            if(this.scene.nodes[i] instanceof Planet){
+                planets.push(this.scene.nodes[i]);
             }
-        });
+        }
+        
 
         this.camera.aspect = this.aspect;
         this.camera.updateProjection();
@@ -78,10 +80,12 @@ class App extends Application {
             this.camera.update(dt);
         }
 
-        if (this.planet) {
-            this.planet.update(dt);
+        var planet;
+        for(var i in planets){
+            planet = planets[i];
+            planet.update(dt);
         }
-
+        
         if (this.physics) {
             this.physics.update(dt);
         }
@@ -117,8 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
     audio2.muted = true;
     audio1.volume = 0.5;
     audio2.volume = 0.2;
-    audio1.play();
-    audio2.play();
+    //audio1.play();
+    //audio2.play();
     audio1.muted = false;
     audio2.muted = false;
 });

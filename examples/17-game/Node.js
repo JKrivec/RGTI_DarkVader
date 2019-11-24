@@ -54,17 +54,6 @@ export default class Node {
         }
         after && after(this);
     }
-    /*
-    
-    loopThroughAll(){
-        for(var attributename in myobject){
-            console.log(attributename+": "+myobject[attributename]);
-        }
-        
-    }
-    */
-
-
 }
 
 Node.defaults = {
