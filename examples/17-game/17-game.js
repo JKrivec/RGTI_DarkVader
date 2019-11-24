@@ -4,9 +4,17 @@ import Renderer from './Renderer.js';
 import Physics from './Physics.js';
 import Camera from './Camera.js';
 import Planet from './Planet.js';
+import Bullet from './Bullet.js';
+import Mesh from './Mesh.js';
 import SceneLoader from './SceneLoader.js';
 import SceneBuilder from './SceneBuilder.js';
 const planets = [];
+const bullets = [];
+var builder = null;
+var scene = null;
+var renderer = null;
+var xxxx = 0;
+var metek = null;
 class App extends Application {
 
     
@@ -14,7 +22,9 @@ class App extends Application {
     start() {
         const gl = this.gl;
 
+        renderer = new Renderer(gl);
         this.renderer = new Renderer(gl);
+        renderer = this.renderer;
         this.time = Date.now();
         this.startTime = this.time;
         this.aspect = 1;
@@ -26,10 +36,12 @@ class App extends Application {
     }
 
     async load(uri) {
-        const scene = await new SceneLoader().loadScene('scene.json');
-        const builder = new SceneBuilder(scene);
+        scene = await new SceneLoader().loadScene('scene.json');
+        builder = new SceneBuilder(scene);        
         this.scene = builder.build();
+        scene = this.scene;
         this.physics = new Physics(this.scene);
+        console.log(this.scene);
 
         // Find first camera.
         this.camera = null;
@@ -39,6 +51,7 @@ class App extends Application {
             }
         });
 
+        
         //nafila array "planeti" s vsemi nodi v sceni k so tipa "planet"
         var i;
         for(i in this.scene.nodes){
@@ -47,10 +60,12 @@ class App extends Application {
             }
         }
         
-
+        
         this.camera.aspect = this.aspect;
         this.camera.updateProjection();
         this.renderer.prepare(this.scene);
+
+
     }
 
     enableCamera() {
@@ -79,7 +94,7 @@ class App extends Application {
         if (this.camera) {
             this.camera.update(dt);
         }
-
+        
         var planet;
         for(var i in planets){
             planet = planets[i];
@@ -93,7 +108,7 @@ class App extends Application {
 
     render() {
         if (this.scene) {
-            this.renderer.render(this.scene, this.camera, this.planet);
+            this.renderer.render(this.scene, this.camera);
         }
     }
 
@@ -108,6 +123,32 @@ class App extends Application {
     }
 
 }
+//strelanje 
+document.body.onkeyup = function(e){
+    //spacebar
+    console.log(e.keyCode);
+    if(e.keyCode == 32){
+        console.log(xxxx);
+        var mesh = new Mesh(builder.spec.meshes[0]);
+        var texture = builder.spec.textures[5];
+        var planet = new Planet(mesh, texture, builder.spec);
+        planet.scale[0] = 0.1;
+        planet.scale[1] = 0.1;
+        planet.translation[0] = 15;
+        planet.translation[2] = xxxx;
+        metek = planet;
+        xxxx -= 3;
+        scene.addNode(planet);
+        renderer.prepareNode(planet);;
+    }
+
+    if(e.keyCode == 88){
+        console.log("x");
+        renderer.prepareNode(metek);
+        scene.removeNode(metek);
+    }
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.querySelector('canvas');
@@ -123,6 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
     audio2.volume = 0.2;
     //audio1.play();
     //audio2.play();
-    audio1.muted = false;
-    audio2.muted = false;
+    //audio1.muted = false;
+    //audio2.muted = false;
 });

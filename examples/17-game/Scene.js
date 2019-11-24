@@ -8,6 +8,10 @@ export default class Scene {
         this.nodes.push(node);
     }
 
+    removeNode(node) {
+        this.nodes.pop(node);
+    }
+
     traverse(before, after) {
         this.nodes.forEach(node => node.traverse(before, after));
     }

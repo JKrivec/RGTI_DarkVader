@@ -33,6 +33,20 @@ export default class Renderer {
         });
     }
 
+    prepareNode(node) {
+        node.gl = {};
+            if (node.mesh) {
+                Object.assign(node.gl, this.createModel(node.mesh));
+            }
+            if (node.image) {
+                node.gl.texture = this.createTexture(node.image);
+            }
+    }
+
+    removeNode(node){
+        node.gl = {};
+    }
+
     render(scene, camera) {
         const gl = this.gl;
 

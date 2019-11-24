@@ -14,6 +14,7 @@ export default class SceneBuilder {
     }
 
     createNode(spec) {
+        //console.log(spec);
         switch (spec.type) {
             case 'camera': return new Camera(spec);
             case 'model': {

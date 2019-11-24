@@ -4,13 +4,13 @@ import Node from './Node.js';
 const mat4 = glMatrix.mat4;
 const vec3 = glMatrix.vec3;
 
-export default class Planet extends Node {
+export default class Bullet extends Node {
 
-    constructor(mesh, image, options) {
+    constructor( options) {
         super(options);
         Utils.init(this, this.constructor.defaults, options);
-        this.mesh = mesh;
-        this.image = image;
+        this.mesh = "../../common/images/laserTexture.jpg" ;
+        this.image = "../../common/models/cube.json" ;
 
     }
 
@@ -30,7 +30,10 @@ export default class Planet extends Node {
 
 }
 
-Planet.defaults = {
+Bullet.defaults = {
+    //texture          : "../../common/images/laserTexture.jpg",
+    //mesh             : "../../common/models/cube.json", 
+    translation      : [10,0,0],
     aspect           : 1,
     fov              : 1.5,
     near             : 0.01,
