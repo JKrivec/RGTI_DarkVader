@@ -19,7 +19,7 @@ export default class Planet extends Node {
         const c = this;
         //rotacija planeta
         //treba bo z vec3 narest da bo speedy kao???
-        const kot = (0.005) * (Math.PI/180);
+        const kot = (0.01) * (Math.PI/180);
         const rotatedX = Math.cos(kot) * (c.translation[0]) - Math.sin(kot) * (c.translation[2]);
         c.translation[0] = rotatedX;
         const rotatedZ = Math.sin(kot) * (c.translation[0]) + Math.cos(kot) * (c.translation[2]);

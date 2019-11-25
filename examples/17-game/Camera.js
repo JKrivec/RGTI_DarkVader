@@ -89,6 +89,7 @@ export default class Camera extends Node {
         c.rotation[0] -= dy * c.mouseSensitivity;
         c.rotation[1] -= dx * c.mouseSensitivity;
 
+
         const pi = Math.PI;
         const twopi = pi * 2;
         const halfpi = pi / 2;
@@ -101,6 +102,9 @@ export default class Camera extends Node {
         }
 
         c.rotation[1] = ((c.rotation[1] % twopi) + twopi) % twopi;
+
+        console.log(c.rotation);
+        console.log(c.translation);
     }
 
     keydownHandler(e) {

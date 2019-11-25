@@ -51,6 +51,8 @@ class App extends Application {
             }
         });
 
+    
+
         
         //nafila array "planeti" s vsemi nodi v sceni k so tipa "planet"
         var i;
@@ -130,7 +132,7 @@ document.body.onkeyup = function(e){
     if(e.keyCode == 32){
         console.log(xxxx);
         var mesh = new Mesh(builder.spec.meshes[0]);
-        var texture = builder.spec.textures[5];
+        var texture = builder.spec.textures[11];
         var planet = new Planet(mesh, texture, builder.spec);
         planet.scale[0] = 0.1;
         planet.scale[1] = 0.1;
