@@ -15,6 +15,11 @@ var scene = null;
 var renderer = null;
 var xxxx = 0;
 var metekGlobal = null;
+var start = false;
+var audio1 = null;
+var audio2 = null;
+var intro = null;
+
 class App extends Application {
 
     
@@ -89,28 +94,30 @@ class App extends Application {
     }
 
     update() {
-        const t = this.time = Date.now();
-        const dt = (this.time - this.startTime) * 0.001;
-        this.startTime = this.time;
-
-        
-
-        if (this.camera) {
-            this.camera.update(dt);
-        }
-        
-        var planet;
-        for(var i in planets){
-            planet = planets[i];
-            planet.update(dt);
-        }
-
-        if(this.bullet){
-            this.bullet.update(dt,this.camera);
-        }
-        
-        if (this.physics) {
-            this.physics.update(dt);
+        if ( start ) {
+            const t = this.time = Date.now();
+            const dt = (this.time - this.startTime) * 0.001;
+            this.startTime = this.time;
+    
+            
+    
+            if (this.camera) {
+                this.camera.update(dt);
+            }
+            
+            var planet;
+            for(var i in planets){
+                planet = planets[i];
+                planet.update(dt);
+            }
+    
+            if(this.bullet){
+                this.bullet.update(dt,this.camera);
+            }
+            
+            if (this.physics) {
+                this.physics.update(dt);
+            }
         }
     }
 
@@ -146,7 +153,7 @@ document.body.onkeyup = function(e){
         metek.scale[1] = 0.1;
         metek.translation[0] = 15;
         metek.translation[2] = xxxx;
-        metekGlobal = metek
+        metekGlobal = metek;
         xxxx -= 3;
         scene.addNode(metek);
         renderer.prepareNode(metek);;
@@ -157,7 +164,21 @@ document.body.onkeyup = function(e){
         renderer.prepareNode(metekGlobal);
         scene.removeNode(metekGlobal);
     }
+
+    //play -> press 'p'
+    if(e.keyCode == 80){
+        start = true;
+        audio2.volume = 0.1;
+        audio2.play();
+        //audio2.muted = false;
+           
+        intro.classList.toggle('show');
+
+
+    }
 }
+
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -166,14 +187,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const gui = new dat.GUI();
     gui.add(app, 'enableCamera');
 
-    const audio1 = document.getElementById("audio1");
-    const audio2 = document.getElementById("audio2");
-    audio1.muted = true; 
-    audio2.muted = true;
-    audio1.volume = 0.5;
-    audio2.volume = 0.2;
-    //audio1.play();
-    //audio2.play();
+    audio1 = document.getElementById("audio1");
+    audio2 = document.getElementById("audio2");
+    intro = document.getElementById("introOverlay"); 
+    audio1.volume = 0.3;
+    audio1.play();
     //audio1.muted = false;
-    //audio2.muted = false;
 });
