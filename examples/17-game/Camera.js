@@ -103,8 +103,8 @@ export default class Camera extends Node {
 
         c.rotation[1] = ((c.rotation[1] % twopi) + twopi) % twopi;
 
-        console.log(c.rotation);
-        console.log(c.translation);
+        //console.log(c.rotation);
+        //console.log(c.translation);
     }
 
     keydownHandler(e) {

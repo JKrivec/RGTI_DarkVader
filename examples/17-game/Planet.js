@@ -11,7 +11,8 @@ export default class Planet extends Node {
         Utils.init(this, this.constructor.defaults, options);
         this.mesh = mesh;
         this.image = image;
-
+        //var radian = (Math.PI/180);
+        //this.rotation[1] += (radian)* (2*Math.PI - (2*(Math.atan(this.translation[2] / this.translation[0]))));
     }
 
 
@@ -41,3 +42,4 @@ Planet.defaults = {
     friction         : 0.2,
     acceleration     : 20
 };
+ 

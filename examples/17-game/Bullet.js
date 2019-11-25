@@ -6,16 +6,16 @@ const vec3 = glMatrix.vec3;
 
 export default class Bullet extends Node {
 
-    constructor( options) {
+    constructor(mesh,image,options) {
         super(options);
         Utils.init(this, this.constructor.defaults, options);
-        this.mesh = "../../common/images/laserTexture.jpg" ;
-        this.image = "../../common/models/cube.json" ;
+        this.mesh = mesh;
+        this.image = image;
 
     }
 
 
-    update(dt) {
+    update(dt,camera) {
         const c = this;
         //rotacija planeta
         //treba bo z vec3 narest da bo speedy kao???
@@ -25,15 +25,14 @@ export default class Bullet extends Node {
         const rotatedZ = Math.sin(kot) * (c.translation[0]) + Math.cos(kot) * (c.translation[2]);
         c.translation[2] = rotatedZ;
         c.rotation[1] -= kot;
+
     }
 
 
 }
 
 Bullet.defaults = {
-    //texture          : "../../common/images/laserTexture.jpg",
-    //mesh             : "../../common/models/cube.json", 
-    translation      : [10,0,0],
+    translation      : [10,5,7],
     aspect           : 1,
     fov              : 1.5,
     near             : 0.01,

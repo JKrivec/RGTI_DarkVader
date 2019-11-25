@@ -1,5 +1,5 @@
 import Application from '../../common/Application.js';
-
+import Utils from './Utils.js';
 import Renderer from './Renderer.js';
 import Physics from './Physics.js';
 import Camera from './Camera.js';
@@ -14,7 +14,7 @@ var builder = null;
 var scene = null;
 var renderer = null;
 var xxxx = 0;
-var metek = null;
+var metekGlobal = null;
 class App extends Application {
 
     
@@ -57,8 +57,10 @@ class App extends Application {
         //nafila array "planeti" s vsemi nodi v sceni k so tipa "planet"
         var i;
         for(i in this.scene.nodes){
-            if(this.scene.nodes[i] instanceof Planet){
-                planets.push(this.scene.nodes[i]);
+            var node = this.scene.nodes[i];
+            if(node instanceof Planet){
+                //node.rotation[1] =  (2*Math.PI - (2*(Math.atan(node.translation[2] / node.translation[0]))));
+                planets.push(node);
             }
         }
         
@@ -102,6 +104,10 @@ class App extends Application {
             planet = planets[i];
             planet.update(dt);
         }
+
+        if(this.bullet){
+            this.bullet.update(dt,this.camera);
+        }
         
         if (this.physics) {
             this.physics.update(dt);
@@ -131,23 +137,25 @@ document.body.onkeyup = function(e){
     console.log(e.keyCode);
     if(e.keyCode == 32){
         console.log(xxxx);
-        var mesh = new Mesh(builder.spec.meshes[0]);
+        var mesh = new Mesh(builder.spec.meshes[2]);
         var texture = builder.spec.textures[11];
-        var planet = new Planet(mesh, texture, builder.spec);
-        planet.scale[0] = 0.1;
-        planet.scale[1] = 0.1;
-        planet.translation[0] = 15;
-        planet.translation[2] = xxxx;
-        metek = planet;
+        console.log(mesh);
+        console.log(texture);
+        var metek = new Bullet(mesh, texture, builder.spec);
+        metek.scale[0] = 0.1;
+        metek.scale[1] = 0.1;
+        metek.translation[0] = 15;
+        metek.translation[2] = xxxx;
+        metekGlobal = metek
         xxxx -= 3;
-        scene.addNode(planet);
-        renderer.prepareNode(planet);;
+        scene.addNode(metek);
+        renderer.prepareNode(metek);;
     }
 
     if(e.keyCode == 88){
         console.log("x");
-        renderer.prepareNode(metek);
-        scene.removeNode(metek);
+        renderer.prepareNode(metekGlobal);
+        scene.removeNode(metekGlobal);
     }
 }
 
