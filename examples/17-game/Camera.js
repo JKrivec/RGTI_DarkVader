@@ -4,6 +4,11 @@ import Node from './Node.js';
 const mat4 = glMatrix.mat4;
 const vec3 = glMatrix.vec3;
 
+var dx = 0;
+var dy = 0;
+var dx_prev = 0;
+var dy_prev = 0;
+
 export default class Camera extends Node {
 
     constructor(options) {
@@ -63,6 +68,18 @@ export default class Camera extends Node {
         if (len > c.maxSpeed) {
             vec3.scale(c.velocity, c.velocity, c.maxSpeed / len);
         }
+        
+        // (Klemen) updata mouse movement na podlagi dx in dy iz mousemoveHandler ter prejsnjih sprememb pomnozenih s pospeskom
+        var dx_update = dx + dx_prev * this.mouseAcceleration;
+        var dy_update = dy + dy_prev * this.mouseAcceleration;
+        if (dx_update > this.maxMouseSpeed) { dx_update = this.maxMouseSpeed; }
+        if (dx_update < -this.maxMouseSpeed) { dx_update = -this.maxMouseSpeed; }
+        if (dy_update > this.maxMouseSpeed) { dy_update = this.maxMouseSpeed; }
+        if (dy_update < -this.maxMouseSpeed) { dy_update = -this.maxMouseSpeed; }
+        c.rotation[1] -= dx_update;
+        c.rotation[0] -= dy_update;
+        dx_prev = dx_update;
+        dy_prev = dy_update;
     }
 
     enable() {
@@ -82,12 +99,10 @@ export default class Camera extends Node {
     }
 
     mousemoveHandler(e) {
-        const dx = e.movementX;
-        const dy = e.movementY;
         const c = this;
 
-        c.rotation[0] -= dy * c.mouseSensitivity;
-        c.rotation[1] -= dx * c.mouseSensitivity;
+        dx = e.movementX * c.mouseSensitivity;
+        dy = e.movementY * c.mouseSensitivity;
 
 
         const pi = Math.PI;
@@ -102,9 +117,6 @@ export default class Camera extends Node {
         }
 
         c.rotation[1] = ((c.rotation[1] % twopi) + twopi) % twopi;
-
-        //console.log(c.rotation);
-        //console.log(c.translation);
     }
 
     keydownHandler(e) {
@@ -115,6 +127,13 @@ export default class Camera extends Node {
         this.keys[e.code] = false;
     }
 
+    getRotation() {
+        return vec3.set(vec3.create(), this.rotation[0], this.rotation[1], 0);
+    }
+    
+    getLocation() {
+        return vec3.set(vec3.create(), this.translation[0], this.translation[1], this.translation[2]);
+    }
 }
 
 Camera.defaults = {
@@ -123,8 +142,10 @@ Camera.defaults = {
     near             : 0.01,
     far              : 100,
     velocity         : [0, 0, 0],
-    mouseSensitivity : 0.002,
+    mouseSensitivity : 0.0000075,
     maxSpeed         : 3,
     friction         : 0.2,
-    acceleration     : 20
+    acceleration     : 20,
+    mouseAcceleration: 0.97,
+    maxMouseSpeed    : 0.01
 };

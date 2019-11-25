@@ -9,12 +9,12 @@ import Mesh from './Mesh.js';
 import SceneLoader from './SceneLoader.js';
 import SceneBuilder from './SceneBuilder.js';
 const planets = [];
-const bullets = [];
+var camera = null;
 var builder = null;
 var scene = null;
 var renderer = null;
-var xxxx = 0;
-var metekGlobal = null;
+var metek = null;
+var canShoot = true;
 var start = false;
 var audio1 = null;
 var audio2 = null;
@@ -53,6 +53,7 @@ class App extends Application {
         this.scene.traverse(node => {
             if (node instanceof Camera) {
                 this.camera = node;
+                camera = node;
             }
         });
 
@@ -110,10 +111,6 @@ class App extends Application {
                 planet = planets[i];
                 planet.update(dt);
             }
-    
-            if(this.bullet){
-                this.bullet.update(dt,this.camera);
-            }
             
             if (this.physics) {
                 this.physics.update(dt);
@@ -136,45 +133,47 @@ class App extends Application {
             this.camera.updateProjection();
         }
     }
-
 }
+
 //strelanje 
-document.body.onkeyup = function(e){
+document.body.onkeyup = function(e) {
     //spacebar
-    console.log(e.keyCode);
-    if(e.keyCode == 32){
-        console.log(xxxx);
-        var mesh = new Mesh(builder.spec.meshes[2]);
-        var texture = builder.spec.textures[11];
-        console.log(mesh);
-        console.log(texture);
-        var metek = new Bullet(mesh, texture, builder.spec);
-        metek.scale[0] = 0.1;
-        metek.scale[1] = 0.1;
-        metek.translation[0] = 15;
-        metek.translation[2] = xxxx;
-        metekGlobal = metek;
-        xxxx -= 3;
-        scene.addNode(metek);
-        renderer.prepareNode(metek);;
+    if (e.keyCode == 32) {
+        if (canShoot) {
+            canShoot = false;
+            var mesh = new Mesh(builder.spec.meshes[2]);
+            var texture = builder.spec.textures[11];
+            metek = new Bullet(mesh, texture, builder.spec);
+            metek.translation = camera.getLocation();
+            metek.rotation = camera.getRotation();
+            //console.log(metek.rotation);
+            metek.scale[0] = 0.1;
+            metek.scale[1] = 0.1
+            metek.scale[2] = 10;
+            scene.addNode(metek);
+            renderer.prepareNode(metek);
+            metek.shoot();
+            setTimeout(function() {
+                renderer.removeNode(metek);
+                scene.removeNode(metek);
+            }, 2000);
+            setTimeout(function() {
+                metek = null;
+                canShoot = true;
+            }, 3000);
+        }
     }
 
-    if(e.keyCode == 88){
-        console.log("x");
-        renderer.prepareNode(metekGlobal);
-        scene.removeNode(metekGlobal);
+    if (e.keyCode == 88) {
+        renderer.removeNode(metek);
+        scene.removeNode(metek);
     }
-
-    //play -> press 'p'
-    if(e.keyCode == 80){
+    
+    if (e.keyCode == 80) {
         start = true;
         audio2.volume = 0.1;
         audio2.play();
-        //audio2.muted = false;
-           
         intro.classList.toggle('show');
-
-
     }
 }
 

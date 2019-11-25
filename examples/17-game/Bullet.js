@@ -11,24 +11,20 @@ export default class Bullet extends Node {
         Utils.init(this, this.constructor.defaults, options);
         this.mesh = mesh;
         this.image = image;
-
     }
 
-
-    update(dt,camera) {
-        const c = this;
-        //rotacija planeta
-        //treba bo z vec3 narest da bo speedy kao???
-        const kot = (0.005) * (Math.PI/180);
-        const rotatedX = Math.cos(kot) * (c.translation[0]) - Math.sin(kot) * (c.translation[2]);
-        c.translation[0] = rotatedX;
-        const rotatedZ = Math.sin(kot) * (c.translation[0]) + Math.cos(kot) * (c.translation[2]);
-        c.translation[2] = rotatedZ;
-        c.rotation[1] -= kot;
-
+    update(dt) {
     }
-
-
+    
+    shoot() {
+        var naklon = Math.abs(Math.sin(this.rotation[0]));
+        const forward = vec3.set(vec3.create(),
+            (1 - naklon) * -Math.sin(this.rotation[1]), Math.sin(this.rotation[0]), (1 - naklon) * -Math.cos(this.rotation[1]));
+        console.log(forward);
+        vec3.normalize(forward, forward);
+        vec3.scale(this.velocity, forward, this.acceleration);
+        console.log(this.velocity);
+    }
 }
 
 Bullet.defaults = {
@@ -41,5 +37,5 @@ Bullet.defaults = {
     mouseSensitivity : 0.002,
     maxSpeed         : 3,
     friction         : 0.2,
-    acceleration     : 20
+    acceleration     : 10
 };
