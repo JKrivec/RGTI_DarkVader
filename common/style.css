@@ -48,25 +48,56 @@ a.back:hover {
     max-height:100%;
     z-index:0;
 }
+
 #introOverlay {
     position: fixed; 
     top: 0px;
     left: 0px;
-    max-width:100%;
-    height:auto;
-    max-height:100%;
-    z-index:1;
-
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    z-index: 1;
     -webkit-transition: opacity 3s ease-in-out;
     -moz-transition: opacity 3s ease-in-out;
     -ms-transition: opacity 3s ease-in-out;
     -o-transition: opacity 3s ease-in-out;
-     opacity: 1;
-  }
-    #introOverlay.show{
-        opacity: 0;
-      }
+    opacity: 2;
+}
 
+#introOverlay.show {
+    opacity: 0;
+}
 
+.topleft {
+    position: fixed; 
+    top: 0px;
+    margin-left: 20px;
+    max-width: 100%;
+    height:auto;
+    max-height: 100%;
+    color: yellow;
+    z-index: 1;
+}
 
+#cooldown {
+    position: fixed; 
+    margin-top: 20%;
+    margin-left: 47%;
+    max-width: 100%;
+    height:auto;
+    max-height:100%;
+    color: yellow;
+    z-index: 1;
+}
+
+#status {
+    position: fixed; 
+    margin-top: 15%;
+    margin-left: 5%;
+    max-width: 100%;
+    height:auto;
+    max-height:100%;
+    color: yellow;
+    z-index: 1;
+    font-size: 400px;
 }

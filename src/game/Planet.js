@@ -40,6 +40,7 @@ export default class Planet extends Node {
 }
 
 Planet.defaults = {
+    type             : "planet",
     aspect           : 1,
     fov              : 1.5,
     near             : 0.01,

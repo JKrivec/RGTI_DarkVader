@@ -18,9 +18,6 @@ export default class Scene {
         if ( indexPlaneta !== -1 ){
             this.nodes.splice(indexPlaneta, 1);
         }
-    
-
-
     }
 
     traverse(before, after) {

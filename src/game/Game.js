@@ -23,8 +23,6 @@ var intro = null;
 
 class App extends Application {
 
-    
-
     start() {
         const gl = this.gl;
 
@@ -57,9 +55,6 @@ class App extends Application {
             }
         });
 
-    
-
-        
         //nafila array "planeti" s vsemi nodi v sceni k so tipa "planet"
         var i;
         for(i in this.scene.nodes){
@@ -71,12 +66,9 @@ class App extends Application {
             }
         }
         
-        
         this.camera.aspect = this.aspect;
         this.camera.updateProjection();
         this.renderer.prepare(this.scene);
-
-
     }
 
     enableCamera() {
@@ -100,27 +92,18 @@ class App extends Application {
             const t = this.time = Date.now();
             const dt = (this.time - this.startTime) * 0.001;
             this.startTime = this.time;
-    
             
-    
             if (this.camera) {
                 this.camera.update(dt);
             }
             
-            var planet;
-            for(var i in planets){
-                planet = planets[i];
-                planet.update(dt);
+            for (var i in planets) {
+                planets[i].update(dt);
             }
             
             if (this.physics) {
                 this.physics.update(dt);
             }
-
-            
-           
-            
-
         }
     }
 
@@ -158,12 +141,14 @@ document.body.onkeyup = function(e) {
             scene.addNode(metek);
             renderer.prepareNode(metek);
             metek.shoot();
-            //console.log("scene size = " + scene.nodes.length);
+            var cooldownHUD = document.querySelector("#cooldown");
+            cooldownHUD.innerHTML = "Charging...";
             setTimeout(function() {
+                cooldownHUD.innerHTML = "";
                 scene.deleteNode(metek);
+                metek = null;
             }, 3000);
             setTimeout(function() {
-                metek = null;
                 canShoot = true;
             }, 3050);
         }
@@ -172,24 +157,45 @@ document.body.onkeyup = function(e) {
     if (e.keyCode == 80) {
         start = true;
         audio2.volume = 0.1;
-        //audio2.play();
+        audio2.play();
         intro.classList.toggle('show');
+        
+        var time = 60;
+        var scoreHUD = document.querySelector("#score");
+        var timeHUD = document.querySelector("#time");
+        var timeInterval = setInterval(function() {
+            time--;
+            var stPlanetov = 0;
+            for (var i in scene.nodes) {
+                if (scene.nodes[i].type == "planet") {
+                    stPlanetov++;
+                }
+            }
+            scoreHUD.innerHTML = "Planets left: " + stPlanetov;
+            timeHUD.innerHTML = "Time left: " + time;
+            if (time == 0) {
+                document.querySelector("#status").innerHTML = "DEFEAT";
+                clearInterval(timeInterval);
+            }
+            if (stPlanetov == 0) {
+                document.querySelector("#status").innerHTML = "VICTORY";
+                clearInterval(timeInterval);
+            }
+        }, 1000);
     }
 };
-
-
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.querySelector('canvas');
     const app = new App(canvas);
-    const gui = new dat.GUI();
-    gui.add(app, 'enableCamera');
 
     audio1 = document.getElementById("audio1");
     audio2 = document.getElementById("audio2");
     intro = document.getElementById("introOverlay"); 
     audio1.volume = 0.3;
     audio1.play();
-    //audio1.muted = false;
+    
+    document.onclick = function() {
+        app.enableCamera();
+    };
 });
