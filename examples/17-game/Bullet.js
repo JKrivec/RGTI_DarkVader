@@ -17,13 +17,10 @@ export default class Bullet extends Node {
     }
     
     shoot() {
-        var naklon = Math.abs(Math.sin(this.rotation[0]));
-        const forward = vec3.set(vec3.create(),
-            (1 - naklon) * -Math.sin(this.rotation[1]), Math.sin(this.rotation[0]), (1 - naklon) * -Math.cos(this.rotation[1]));
-        console.log(forward);
+        var forward = vec3.set(vec3.create(),
+            Math.cos(this.rotation[0]) * -Math.sin(this.rotation[1]), Math.sin(Math.sin(this.rotation[0])), Math.cos(this.rotation[0]) * -Math.cos(this.rotation[1]));
         vec3.normalize(forward, forward);
         vec3.scale(this.velocity, forward, this.acceleration);
-        console.log(this.velocity);
     }
 }
 

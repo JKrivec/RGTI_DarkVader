@@ -8,6 +8,7 @@ import Bullet from './Bullet.js';
 import Mesh from './Mesh.js';
 import SceneLoader from './SceneLoader.js';
 import SceneBuilder from './SceneBuilder.js';
+
 const planets = [];
 var camera = null;
 var builder = null;
@@ -46,7 +47,6 @@ class App extends Application {
         this.scene = builder.build();
         scene = this.scene;
         this.physics = new Physics(this.scene);
-        console.log(this.scene);
 
         // Find first camera.
         this.camera = null;
@@ -146,9 +146,8 @@ document.body.onkeyup = function(e) {
             metek = new Bullet(mesh, texture, builder.spec);
             metek.translation = camera.getLocation();
             metek.rotation = camera.getRotation();
-            //console.log(metek.rotation);
             metek.scale[0] = 0.1;
-            metek.scale[1] = 0.1
+            metek.scale[1] = 0.1;
             metek.scale[2] = 10;
             scene.addNode(metek);
             renderer.prepareNode(metek);
@@ -175,7 +174,7 @@ document.body.onkeyup = function(e) {
         audio2.play();
         intro.classList.toggle('show');
     }
-}
+};
 
 
 
