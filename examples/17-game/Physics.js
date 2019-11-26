@@ -57,6 +57,16 @@ export default class Physics {
             return;
         }
 
+        //
+        var manjsi = null;
+         a.id < b.id ? manjsi = a : manjsi = b;
+        console.log( "collision  a= "+ a + '\nb= ' +b );
+        this.scene.deleteNode(a);
+        this.scene.deleteNode(b);
+        return;
+
+      
+
         // Move node A minimally to avoid collision.
         const diffa = vec3.sub(vec3.create(), maxb, mina);
         const diffb = vec3.sub(vec3.create(), maxa, minb);

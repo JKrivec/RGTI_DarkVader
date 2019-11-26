@@ -16,7 +16,7 @@ var scene = null;
 var renderer = null;
 var metek = null;
 var canShoot = true;
-var start = false;
+var start = true;
 var audio1 = null;
 var audio2 = null;
 var intro = null;
@@ -66,6 +66,7 @@ class App extends Application {
             var node = this.scene.nodes[i];
             if(node instanceof Planet){
                 //node.rotation[1] =  (2*Math.PI - (2*(Math.atan(node.translation[2] / node.translation[0]))));
+                node.id = i;
                 planets.push(node);
             }
         }
@@ -115,6 +116,11 @@ class App extends Application {
             if (this.physics) {
                 this.physics.update(dt);
             }
+
+            
+           
+            
+
         }
     }
 
@@ -146,32 +152,27 @@ document.body.onkeyup = function(e) {
             metek = new Bullet(mesh, texture, builder.spec);
             metek.translation = camera.getLocation();
             metek.rotation = camera.getRotation();
-            metek.scale[0] = 0.1;
-            metek.scale[1] = 0.1;
-            metek.scale[2] = 10;
+            metek.scale = [0.05,0.05,0.05];
+            metek.aabb[0] = [-0.2,-0.2,-0.2];
+            metek.aabb[1] = [0.2,0.2,0.2];
             scene.addNode(metek);
             renderer.prepareNode(metek);
             metek.shoot();
+            //console.log("scene size = " + scene.nodes.length);
             setTimeout(function() {
-                renderer.removeNode(metek);
-                scene.removeNode(metek);
-            }, 2000);
+                scene.deleteNode(metek);
+            }, 3000);
             setTimeout(function() {
                 metek = null;
                 canShoot = true;
-            }, 3000);
+            }, 3050);
         }
-    }
-
-    if (e.keyCode == 88) {
-        renderer.removeNode(metek);
-        scene.removeNode(metek);
     }
     
     if (e.keyCode == 80) {
         start = true;
         audio2.volume = 0.1;
-        audio2.play();
+        //audio2.play();
         intro.classList.toggle('show');
     }
 };

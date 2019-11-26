@@ -11,6 +11,14 @@ export default class Planet extends Node {
         Utils.init(this, this.constructor.defaults, options);
         this.mesh = mesh;
         this.image = image;
+
+        // Hitboxi, problem je ker so kvadratni, 0.8 je ok kompromis
+        let planetMin = vec3.create();
+        let planetMax = vec3.create();
+        vec3.scale( planetMin, this.scale, -0.8 );
+        vec3.scale( planetMax, this.scale, 0.8 );
+        this.aabb.min = planetMin;
+        this.aabb.max = planetMax;
         //var radian = (Math.PI/180);
         //this.rotation[1] += (radian)* (2*Math.PI - (2*(Math.atan(this.translation[2] / this.translation[0]))));
     }

@@ -18,7 +18,8 @@
       "mesh": 2,
       "texture": 0,
       "translation": [4, 0, 0],
-      "scale": [0.15,0.15,0.15]
+      "scale": [0.15,0.15,0.15],
+      "id": 1 
     },
     {
       "type": "planet",
