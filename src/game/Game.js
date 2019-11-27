@@ -3,6 +3,7 @@ import Utils from './Utils.js';
 import Renderer from './Renderer.js';
 import Physics from './Physics.js';
 import Camera from './Camera.js';
+import Light from './Light.js';
 import Planet from './Planet.js';
 import Bullet from './Bullet.js';
 import Mesh from './Mesh.js';
@@ -46,25 +47,37 @@ class App extends Application {
         scene = this.scene;
         this.physics = new Physics(this.scene);
 
-        // Find first camera.
+        // Find first camera. And light
         this.camera = null;
+        this.light = null;
         this.scene.traverse(node => {
             if (node instanceof Camera) {
                 this.camera = node;
                 camera = node;
+            } else if (node instanceof Light) {
+                this.light = node;
             }
         });
 
         //nafila array "planeti" s vsemi nodi v sceni k so tipa "planet"
         var i;
-        for(i in this.scene.nodes){
+        for (i in this.scene.nodes) {
             var node = this.scene.nodes[i];
-            if(node instanceof Planet){
+            if (node instanceof Planet) {
                 //node.rotation[1] =  (2*Math.PI - (2*(Math.atan(node.translation[2] / node.translation[0]))));
                 node.id = i;
                 planets.push(node);
             }
         }
+        
+        /*for (var i in this.scene.nodes[14].mesh.normals) {
+            if (this.scene.nodes[14].mesh.normals[i] < 0) {
+                this.scene.nodes[14].mesh.normals[i] = Math.abs(this.scene.nodes[14].mesh.normals[i]);
+            } else {
+                this.scene.nodes[14].mesh.normals[i] = 0 - this.scene.nodes[14].mesh.normals[i];
+            }
+        }
+        console.log(this.scene.nodes[14].mesh.normals);*/
         
         this.camera.aspect = this.aspect;
         this.camera.updateProjection();
@@ -109,7 +122,7 @@ class App extends Application {
 
     render() {
         if (this.scene) {
-            this.renderer.render(this.scene, this.camera);
+            this.renderer.render(this.scene, this.camera, this.light);
         }
     }
 
@@ -147,10 +160,8 @@ document.body.onkeyup = function(e) {
                 cooldownHUD.innerHTML = "";
                 scene.deleteNode(metek);
                 metek = null;
-            }, 3000);
-            setTimeout(function() {
                 canShoot = true;
-            }, 3050);
+            }, 3000);
         }
     }
     
