@@ -15,10 +15,9 @@ export default class SceneBuilder {
     }
 
     createNode(spec) {
-        //console.log(spec);
         switch (spec.type) {
             case 'camera': return new Camera(spec);
-            case 'light' : return new Light();
+            case 'light' : return new Light(spec);
             case 'model': {
                 const mesh = new Mesh(this.spec.meshes[spec.mesh]);
                 const texture = this.spec.textures[spec.texture];

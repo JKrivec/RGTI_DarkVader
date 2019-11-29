@@ -68,7 +68,7 @@ export default class Renderer {
         gl.uniform1f(program.uniforms.uDiffuse, light.diffuse);
         gl.uniform1f(program.uniforms.uSpecular, light.specular);
         gl.uniform1f(program.uniforms.uShininess, light.shininess);
-        gl.uniform3fv(program.uniforms.uLightPosition, light.position);
+        gl.uniform3fv(program.uniforms.uLightPosition, light.translation);
         let color = vec3.clone(light.color);
         vec3.scale(color, color, 1.0 / 255.0);
         gl.uniform3fv(program.uniforms.uLightColor,  color);

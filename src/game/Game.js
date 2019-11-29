@@ -21,6 +21,7 @@ var start = true;
 var audio1 = null;
 var audio2 = null;
 var intro = null;
+var light = null;
 
 class App extends Application {
 
@@ -56,6 +57,7 @@ class App extends Application {
                 camera = node;
             } else if (node instanceof Light) {
                 this.light = node;
+                light = node;
             }
         });
 
@@ -148,9 +150,9 @@ document.body.onkeyup = function(e) {
             metek = new Bullet(mesh, texture, builder.spec);
             metek.translation = camera.getLocation();
             metek.rotation = camera.getRotation();
-            metek.scale = [0.05,0.05,0.05];
-            metek.aabb[0] = [-0.2,-0.2,-0.2];
-            metek.aabb[1] = [0.2,0.2,0.2];
+            metek.scale = [0.05, 0.05, 0.05];
+            metek.aabb[0] = [-0.2, -0.2, -0.2];
+            metek.aabb[1] = [0.2, 0.2, 0.2];
             scene.addNode(metek);
             renderer.prepareNode(metek);
             metek.shoot();
@@ -186,6 +188,7 @@ document.body.onkeyup = function(e) {
             timeHUD.innerHTML = "Time left: " + time;
             if (time == 0) {
                 document.querySelector("#status").innerHTML = "DEFEAT";
+                canShoot = false;
                 clearInterval(timeInterval);
             }
             if (stPlanetov == 0) {
@@ -194,17 +197,46 @@ document.body.onkeyup = function(e) {
             }
         }, 1000);
     }
+    
+    if (e.keyCode == 77) {
+        if (audio1.muted) {
+            audio1.muted = false;
+            audio2.muted = false;
+        } else {
+            audio1.muted = true;
+            audio2.muted = true;
+        }
+    }
+    
+    if (e.keyCode == 82) {
+        window.location.reload();
+    }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.querySelector('canvas');
     const app = new App(canvas);
+    const gui = new dat.GUI();
 
     audio1 = document.getElementById("audio1");
     audio2 = document.getElementById("audio2");
     intro = document.getElementById("introOverlay"); 
     audio1.volume = 0.3;
     audio1.play();
+    
+    setTimeout(function() {
+        gui.add(app.light, 'ambient', 0.0, 1.0);
+        gui.add(app.light, 'diffuse', 0.0, 1.0);
+        gui.add(app.light, 'specular', 0.0, 1.0);
+        gui.add(app.light, 'shininess', 0.0, 1000.0);
+        gui.addColor(app.light, 'color');
+        for (let i = 0; i < 3; i++) {
+            gui.add(app.light.translation, i, -10.0, 10.0).name('translation.' + String.fromCharCode('x'.charCodeAt(0) + i));
+        }
+        for (let i = 0; i < 3; i++) {
+            gui.add(app.light.attenuation, i, 0.0, 1.0).name('attenuation.' + String.fromCharCode('x'.charCodeAt(0) + i));
+        }
+    }, 5000);
     
     document.onclick = function() {
         app.enableCamera();

@@ -10,8 +10,8 @@
       },
       "aspect": 1,
       "fov": 1,
-      "near": 1,
-      "far": 100
+      "near": 0.01,
+      "far": 1000
     },
     {
       "type": "planet",
@@ -39,7 +39,7 @@
     {
       "type": "planet",
       "mesh": 2,
-      "texture": 2,
+      "texture": 10,
       "translation": [15, 0.3, -4],
       "scale": [1.7,1.7,1.7]
     },
@@ -76,6 +76,18 @@
     },
     {
       "type": "light",
+      "translation": [3, 0, 0]
+    },
+    {
+      "type": "light",
+      "translation": [-3, 0, 0]
+    },
+    {
+      "type": "light",
+      "translation": [0, 0, 3]
+    },
+    {
+      "type": "light",
       "translation": [0, 0, 0]
     }
   
@@ -101,7 +113,6 @@
     "../../common/models/cube.json",
     "../../common/models/pyramid.json",
     "../../common/models/planet.json",
-    "../../common/models/sonce.json",
-    "../../common/models/cube3.json"
+    "../../common/models/sonce.json"
   ]
 }
