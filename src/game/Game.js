@@ -8,6 +8,7 @@ import Bullet from './Bullet.js';
 import Explosion from './Explosion.js';
 import SceneLoader from './SceneLoader.js';
 import SceneBuilder from './SceneBuilder.js';
+import Light from './Light.js';
 
 const mat4 = glMatrix.mat4;
 const vec3 = glMatrix.vec3;
@@ -23,6 +24,7 @@ var start = true;
 var audio1 = null;
 var audio2 = null;
 var intro = null;
+var light = null;
 var explosionObjectArray = [];
 var explosionObjectArrayCounter = 0;
 
@@ -61,6 +63,9 @@ class App extends Application {
             if (node instanceof Camera) {
                 this.camera = node;
                 camera = node;
+            } else if (node instanceof Light) {
+                this.light = node;
+                light = node;
             }
         });
 
@@ -169,6 +174,9 @@ document.body.onkeyup = function(e) {
             metek.rotation = camera.getRotation();
             metek.zadel = false;
             metek.zadetek = null;
+            metek.scale = [0.05, 0.05, 0.05];
+            metek.aabb[0] = [-0.2, -0.2, -0.2];
+            metek.aabb[1] = [0.2, 0.2, 0.2];
             scene.addNode(metek);
             renderer.prepareNode(metek);
             metek.shoot();

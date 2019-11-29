@@ -59,6 +59,7 @@ export default class Renderer {
         mat4.copy(matrix, viewMatrix);
         gl.uniformMatrix4fv(program.uniforms.uProjection, false, camera.projection);
 
+
         scene.traverse(
             node => {
                 matrixStack.push(mat4.clone(matrix));

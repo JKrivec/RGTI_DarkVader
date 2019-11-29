@@ -27,8 +27,16 @@ export default class Bullet extends Node {
         forward = vec3.set(vec3.create(),
             Math.cos(this.rotation[0]) * -Math.sin(this.rotation[1]), Math.sin(Math.sin(this.rotation[0])), Math.cos(this.rotation[0]) * -Math.cos(this.rotation[1]));
         vec3.normalize(forward, forward);
-        vec3.scale(this.velocity, forward, this.acceleration*2);
+        vec3.scale(this.velocity, forward, this.acceleration);
     }
+    
+    /*getForward() {
+        var forward = vec3.set(vec3.create(),
+            Math.cos(this.rotation[0]) * -Math.sin(this.rotation[1]), Math.sin(Math.sin(this.rotation[0])), Math.cos(this.rotation[0]) * -Math.cos(this.rotation[1]));
+        vec3.normalize(forward, forward);
+        vec3.scale(forward, forward, 51);
+        return forward;
+    }*/
 }
 
 Bullet.defaults = {
@@ -38,6 +46,6 @@ Bullet.defaults = {
     near             : 0.01,
     far              : 100,
     velocity         : [0, 0, 0],
-    acceleration     : 10
+    acceleration     : 20
     
 };

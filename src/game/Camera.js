@@ -144,25 +144,30 @@ export default class Camera extends Node {
     }
 
     mousemoveHandler(e) {
-        const dx = e.movementX;
-        const dy = e.movementY;
-        const c = this;
+       const c = this;
+       
+       //dx = e.movementX * c.mouseSensitivity;
+       //dy = e.movementY * c.mouseSensitivity;
+       
+       /*
+       const dx = e.movementX;
+       const dy = e.movementY;
+       c.rotation[0] -= dy * c.mouseSensitivity;
+       c.rotation[1] -= dx * c.mouseSensitivity;
+       */
 
-        c.rotation[0] -= dy * c.mouseSensitivity;
-        c.rotation[1] -= dx * c.mouseSensitivity;
+       const pi = Math.PI;
+       const twopi = pi * 2;
+       const halfpi = pi / 2;
 
-        const pi = Math.PI;
-        const twopi = pi * 2;
-        const halfpi = pi / 2;
+       if (c.rotation[0] > halfpi) {
+           c.rotation[0] = halfpi;
+       }
+       if (c.rotation[0] < -halfpi) {
+           c.rotation[0] = -halfpi;
+       }
 
-        if (c.rotation[0] > halfpi) {
-            c.rotation[0] = halfpi;
-        }
-        if (c.rotation[0] < -halfpi) {
-            c.rotation[0] = -halfpi;
-        }
-
-        c.rotation[1] = ((c.rotation[1] % twopi) + twopi) % twopi;
+       c.rotation[1] = ((c.rotation[1] % twopi) + twopi) % twopi;
     }
 
     keydownHandler(e) {
