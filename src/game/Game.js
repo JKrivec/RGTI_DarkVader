@@ -90,8 +90,6 @@ class App extends Application {
         this.camera.aspect = this.aspect;
         this.camera.updateProjection();
         this.renderer.prepare(this.scene);
-
-
     }
 
     enableCamera() {
@@ -174,6 +172,8 @@ document.body.onkeyup = function(e) {
             scene.addNode(metek);
             renderer.prepareNode(metek);
             metek.shoot();
+            var cooldownHUD = document.querySelector("#cooldown");
+            cooldownHUD.innerHTML = "Charging...";
             //poslusa ce bo metek mogoce zadel
             var check = setInterval( function () {
                 poslusanje();
@@ -187,13 +187,12 @@ document.body.onkeyup = function(e) {
             }
             setTimeout(function() {
                 //console.log(metek.zadel);
+                cooldownHUD.innerHTML = "";
                 scene.deleteNode(metek);
-                clearInterval(check);
-            }, 3000);
-            setTimeout(function() {
                 metek = null;
                 canShoot = true;
-            }, 3050);
+                clearInterval(check);
+            }, 3000);
 
         }
     }
@@ -201,8 +200,46 @@ document.body.onkeyup = function(e) {
     if (e.keyCode == 80) {
         start = true;
         audio2.volume = 0.1;
-        //audio2.play();
+        audio2.play();
         intro.classList.toggle('show');
+        
+        var time = 60;
+        var scoreHUD = document.querySelector("#score");
+        var timeHUD = document.querySelector("#time");
+        var timeInterval = setInterval(function() {
+            time--;
+            var stPlanetov = 0;
+            for (var i in scene.nodes) {
+                if (scene.nodes[i].type == "planet") {
+                    stPlanetov++;
+                }
+            }
+            scoreHUD.innerHTML = "Planets left: " + stPlanetov;
+            timeHUD.innerHTML = "Time left: " + time;
+            if (time == 0) {
+                document.querySelector("#status").innerHTML = "DEFEAT";
+                canShoot = false;
+                clearInterval(timeInterval);
+            }
+            if (stPlanetov == 0) {
+                document.querySelector("#status").innerHTML = "VICTORY";
+                clearInterval(timeInterval);
+            }
+        }, 1000);
+    }
+    
+    if (e.keyCode == 77) {
+        if (audio1.muted) {
+            audio1.muted = false;
+            audio2.muted = false;
+        } else {
+            audio1.muted = true;
+            audio2.muted = true;
+        }
+    }
+    
+    if (e.keyCode == 82) {
+        window.location.reload();
     }
 };
 
@@ -212,15 +249,23 @@ document.body.onkeyup = function(e) {
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.querySelector('canvas');
     const app = new App(canvas);
-    const gui = new dat.GUI();
-    gui.add(app, 'enableCamera');
+    //const gui = new dat.GUI();
+    //gui.add(app, 'enableCamera');
 
     audio1 = document.getElementById("audio1");
     audio2 = document.getElementById("audio2");
     intro = document.getElementById("introOverlay"); 
     audio1.volume = 0.3;
-    //audio1.play();
-    //audio1.muted = false;
+    audio1.play();
+    
+    document.onclick = function() {
+        app.enableCamera();
+    };
+    /*setTimeout(function() {
+        for (let i = 0; i < 3; i++) {
+            gui.add(app.camera.translation, i, -20, 20).name('translation.' + String.fromCharCode('x'.charCodeAt(0) + i));
+        }
+    }, 3000);*/
 });
 
 ///////////////////Animacija eksplozije planeta///////////////////

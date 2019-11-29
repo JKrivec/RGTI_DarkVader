@@ -8,6 +8,8 @@ var dx = 0;
 var dy = 0;
 var dx_prev = 0;
 var dy_prev = 0;
+var xVel = 0;
+var yVel = 0;
 
 export default class Camera extends Node {
 
@@ -30,8 +32,8 @@ export default class Camera extends Node {
 
     update(dt) {
         const c = this;
-
-        const forward = vec3.set(vec3.create(),
+        
+        /*const forward = vec3.set(vec3.create(),
             -Math.sin(c.rotation[1]), 0, -Math.cos(c.rotation[1]));
         const right = vec3.set(vec3.create(),
             Math.cos(c.rotation[1]), 0, -Math.sin(c.rotation[1]));
@@ -67,7 +69,62 @@ export default class Camera extends Node {
         const len = vec3.len(c.velocity);
         if (len > c.maxSpeed) {
             vec3.scale(c.velocity, c.velocity, c.maxSpeed / len);
+        }*/
+        
+        var dx_update = 0;
+        var dy_update = 0;
+        if (this.keys['ArrowRight']) {
+            //c.rotation[1] -= this.keySensitivity;
+            //dx_update = -this.keySensitivity + dx_prev * this.mouseAcceleration;
+            //xVel = -dt * this.acceleration;
+            dx_update = -this.keySensitivity;
         }
+        if (this.keys['ArrowLeft']) {
+            //c.rotation[1] += this.keySensitivity;
+            //dx_update = this.keySensitivity + dx_prev * this.mouseAcceleration;
+            //xVel = dt * this.acceleration;
+            dx_update = this.keySensitivity;
+        }
+        if (this.keys['ArrowDown']) {
+            //c.rotation[0] -= this.keySensitivity;
+            //dy_update = -this.keySensitivity + dy_prev * this.mouseAcceleration;
+            //yVel = -dt * this.acceleration;
+            dy_update = -this.keySensitivity;
+        }
+        if (this.keys['ArrowUp']) {
+            //c.rotation[0] += this.keySensitivity;
+            //dy_update = this.keySensitivity + dy_prev * this.mouseAcceleration;
+            //yVel = dt * this.acceleration;
+            dy_update = this.keySensitivity;
+        }
+        xVel = xVel + dx_update * dt * this.acceleration;
+        yVel = yVel + dy_update * dt * this.acceleration;
+        if (!this.keys['ArrowRight'] &&
+            !this.keys['ArrowLeft'] &&
+            !this.keys['ArrowDown'] &&
+            !this.keys['ArrowUp']) {
+            xVel *= (1 - this.friction);
+            yVel *= (1 - this.friction);
+        }
+        if (xVel > this.maxMouseSpeed) { xVel = this.maxMouseSpeed; }
+        if (xVel < -this.maxMouseSpeed) { xVel = -this.maxMouseSpeed; }
+        if (yVel > this.maxMouseSpeed) { yVel = this.maxMouseSpeed; }
+        if (yVel < -this.maxMouseSpeed) { yVel = -this.maxMouseSpeed; }
+        c.rotation[1] += xVel;
+        c.rotation[0] += yVel;
+        
+        // updata mouse movement na podlagi dx in dy iz mousemoveHandler ter prejsnjih sprememb pomnozenih s pospeskom
+        /*var dx_update = dx + dx_prev * this.mouseAcceleration;
+        var dy_update = dy + dy_prev * this.mouseAcceleration;*/
+        /*if (dx_update > this.maxMouseSpeed) { dx_update = this.maxMouseSpeed; }
+        if (dx_update < -this.maxMouseSpeed) { dx_update = -this.maxMouseSpeed; }
+        if (dy_update > this.maxMouseSpeed) { dy_update = this.maxMouseSpeed; }
+        if (dy_update < -this.maxMouseSpeed) { dy_update = -this.maxMouseSpeed; }
+        
+        c.rotation[1] += dx_update;
+        c.rotation[0] += dy_update;
+        dx_prev = dx_update;
+        dy_prev = dy_update;*/
     }
 
     enable() {
@@ -129,12 +186,13 @@ Camera.defaults = {
     aspect           : 1,
     fov              : 1.5,
     near             : 0.01,
-    far              : 100,
+    far              : 1000,
     velocity         : [0, 0, 0],
-    mouseSensitivity : 0.001,
+    mouseSensitivity : 0.0000075,
     maxSpeed         : 3,
-    friction         : 0.2,
-    acceleration     : 20,
-    mouseAcceleration: 0.97,
-    maxMouseSpeed    : 0.01
+    friction         : 0.03,
+    acceleration     : 3,
+    mouseAcceleration: 1,
+    maxMouseSpeed    : 0.01,
+    keySensitivity   : 0.0025
 };

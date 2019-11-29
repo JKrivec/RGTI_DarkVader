@@ -4,6 +4,7 @@ export default class SceneLoader {
         const scene = await this.loadJson(uri);
         const images = scene.textures.map(uri => this.loadImage(uri));
         const meshes = scene.meshes.map(uri => this.loadJson(uri));
+        
         scene.textures = await Promise.all(images);
         scene.meshes = await Promise.all(meshes);
 

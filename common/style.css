@@ -73,10 +73,14 @@ a.back:hover {
     top: 0px;
     margin-left: 20px;
     max-width: 100%;
-    height:auto;
+    height: auto;
     max-height: 100%;
-    color: yellow;
+    color: #FFC500;
     z-index: 1;
+}
+
+#score, #time {
+    font-family: "Franklin Gothic Condensed";
 }
 
 #cooldown {
@@ -84,20 +88,29 @@ a.back:hover {
     margin-top: 20%;
     margin-left: 47%;
     max-width: 100%;
-    height:auto;
-    max-height:100%;
-    color: yellow;
+    height: auto;
+    max-height: 100%;
+    color: #FFC500;
     z-index: 1;
+    font-family: "Franklin Gothic Condensed";
 }
 
 #status {
     position: fixed; 
     margin-top: 15%;
-    margin-left: 5%;
+    margin-left: 17.5%;
     max-width: 100%;
-    height:auto;
-    max-height:100%;
-    color: yellow;
+    height: auto;
+    max-height: 100%;
+    color: #FFC500;
     z-index: 1;
-    font-size: 400px;
+    font-size: 300px;
+    font-family: "Franklin Gothic Condensed";
+}
+
+@font-face {
+    font-family: 'Franklin Gothic Condensed';
+    src: url('Franklin Gothic Condensed.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
 }
