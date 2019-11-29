@@ -2,7 +2,6 @@ import * as WebGL from './WebGL.js';
 import shaders from './shaders.js';
 
 const mat4 = glMatrix.mat4;
-const vec3 = glMatrix.vec3;
 
 export default class Renderer {
 
@@ -35,7 +34,7 @@ export default class Renderer {
     }
 
     prepareNode(node) {
-        node.gl = {};
+            node.gl = {};
             if (node.mesh) {
                 Object.assign(node.gl, this.createModel(node.mesh));
             }
@@ -44,16 +43,12 @@ export default class Renderer {
             }
     }
 
-    removeNode(node){
-        node.gl = {};
-    }
-
-    render(scene, camera, light) {
+    render(scene, camera) {
         const gl = this.gl;
 
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        const program = this.programs.phong;
+        const program = this.programs.simple;
         gl.useProgram(program.program);
 
         let matrix = mat4.create();
@@ -63,16 +58,6 @@ export default class Renderer {
         mat4.invert(viewMatrix, viewMatrix);
         mat4.copy(matrix, viewMatrix);
         gl.uniformMatrix4fv(program.uniforms.uProjection, false, camera.projection);
-        
-        gl.uniform1f(program.uniforms.uAmbient, light.ambient);
-        gl.uniform1f(program.uniforms.uDiffuse, light.diffuse);
-        gl.uniform1f(program.uniforms.uSpecular, light.specular);
-        gl.uniform1f(program.uniforms.uShininess, light.shininess);
-        gl.uniform3fv(program.uniforms.uLightPosition, light.position);
-        let color = vec3.clone(light.color);
-        vec3.scale(color, color, 1.0 / 255.0);
-        gl.uniform3fv(program.uniforms.uLightColor,  color);
-        gl.uniform3fv(program.uniforms.uLightAttenuation, light.attenuation);
 
         scene.traverse(
             node => {

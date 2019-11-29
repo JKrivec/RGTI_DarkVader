@@ -19,6 +19,7 @@ export default class Planet extends Node {
         vec3.scale( planetMax, this.scale, 0.8 );
         this.aabb.min = planetMin;
         this.aabb.max = planetMax;
+        this.rotation[1] = 3.14159; // texutre se vrappajo obrnjene proti soncu
         //var radian = (Math.PI/180);
         //this.rotation[1] += (radian)* (2*Math.PI - (2*(Math.atan(this.translation[2] / this.translation[0]))));
     }
@@ -27,13 +28,13 @@ export default class Planet extends Node {
     update(dt) {
         const c = this;
         //rotacija planeta
-        //treba bo z vec3 narest da bo speedy kao???
         const kot = (0.01) * (Math.PI/180);
         const rotatedX = Math.cos(kot) * (c.translation[0]) - Math.sin(kot) * (c.translation[2]);
         c.translation[0] = rotatedX;
         const rotatedZ = Math.sin(kot) * (c.translation[0]) + Math.cos(kot) * (c.translation[2]);
         c.translation[2] = rotatedZ;
         c.rotation[1] -= kot;
+        //c.rotation[0] += 0.0001;
     }
 
 

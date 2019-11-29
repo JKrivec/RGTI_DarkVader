@@ -59,46 +59,18 @@ export default class Physics {
 
         //
         var manjsi = null;
-        a.id < b.id ? manjsi = a : manjsi = b;
-        this.scene.deleteNode(a);
-        this.scene.deleteNode(b);
-        a = null;
-        b = null;
+        var vecji = null;
+
+        if(a.id < b.id){
+            manjsi = a;
+            vecji = b;
+        } else {
+            manjsi = b;
+            vecji = a;
+        }
+        vecji.zadetek = manjsi;
+        vecji.zadel = true;
         return;
-
-        // Move node A minimally to avoid collision.
-        /*const diffa = vec3.sub(vec3.create(), maxb, mina);
-        const diffb = vec3.sub(vec3.create(), maxa, minb);
-
-        let minDiff = Infinity;
-        let minDirection = [0, 0, 0];
-        if (diffa[0] >= 0 && diffa[0] < minDiff) {
-            minDiff = diffa[0];
-            minDirection = [minDiff, 0, 0];
-        }
-        if (diffa[1] >= 0 && diffa[1] < minDiff) {
-            minDiff = diffa[1];
-            minDirection = [0, minDiff, 0];
-        }
-        if (diffa[2] >= 0 && diffa[2] < minDiff) {
-            minDiff = diffa[2];
-            minDirection = [0, 0, minDiff];
-        }
-        if (diffb[0] >= 0 && diffb[0] < minDiff) {
-            minDiff = diffb[0];
-            minDirection = [-minDiff, 0, 0];
-        }
-        if (diffb[1] >= 0 && diffb[1] < minDiff) {
-            minDiff = diffb[1];
-            minDirection = [0, -minDiff, 0];
-        }
-        if (diffb[2] >= 0 && diffb[2] < minDiff) {
-            minDiff = diffb[2];
-            minDirection = [0, 0, -minDiff];
-        }
-
-        vec3.add(a.translation, a.translation, minDirection);
-        a.updateTransform();*/
     }
 
 }

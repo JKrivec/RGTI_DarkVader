@@ -15,93 +15,108 @@
     },
     {
       "type": "planet",
-      "mesh": 2,
-      "texture": 0,
+      "mesh": 1,
+      "texture": 6,
       "translation": [4, 0, 0],
       "scale": [0.15,0.15,0.15],
       "id": 1 
     },
     {
       "type": "planet",
-      "mesh": 2,
-      "texture": 1,
-      "translation": [7, 0.2, 4],
+      "mesh": 1,
+      "texture": 5,
+      "translation": [6, 0.1, 0],
+      "scale": [0.22,0.22,0.22]
+    },
+    {
+      "type": "planet",
+      "mesh": 1,
+      "texture": 2,
+      "translation": [8, 0, 0],
       "scale": [0.375,0.375,0.375]
     },
     {
       "type": "planet",
-      "mesh": 2,
-      "texture": 7,
-      "translation": [11, 0.3, -10],
+      "mesh": 1,
+      "texture":1,
+      "translation": [11, -0.1, 0],
       "scale": [0.6,0.6,0.6]
     },
 
     {
       "type": "planet",
-      "mesh": 2,
-      "texture": 2,
-      "translation": [15, 0.3, -4],
+      "mesh": 1,
+      "texture": 4,
+      "translation": [15, 0, 0],
       "scale": [1.7,1.7,1.7]
     },
     {
       "type": "planet",
-      "mesh": 2,
-      "texture": 3,
-      "translation": [27, 0, -5],
-      "scale": [0.45,0.45,0.45]
-    },
-    {
-      "type": "planet",
-      "mesh": 2,
-      "texture": 8,
-      "translation": [20, -1, 5],
+      "mesh": 1,
+      "texture": 0,
+      "translation": [19, 0.1, 0],
       "scale": [0.6,0.6,0.6]
     },
     {
       "type": "planet",
-      "mesh": 2,
-      "texture": 5,
-      "translation": [37, 0, -2],
+      "mesh": 1,
+      "texture": 9,
+      "translation": [22, 0, 0],
+      "scale": [0.45,0.45,0.45]
+    },
+    {
+      "type": "planet",
+      "mesh": 1,
+      "texture": 8,
+      "translation": [27, 0, 0],
+      "scale": [1.5,1.5,1.5]
+    },
+    {
+      "type": "planet",
+      "mesh": 1,
+      "texture": 3,
+      "translation": [30, 0.2, 0],
+      "scale": [0.45,0.45,0.45]
+    },
+    {
+      "type": "planet",
+      "mesh": 1,
+      "texture": 7,
+      "translation": [37, 0, 0],
       "scale": [1.5,1.5,1.5]
     },
     { 
-           "type": "model",      "mesh": 0,      "texture": 9,      "translation": [100, 0, 0],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 9,      "translation": [-100, 0, 0],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 9,      "translation": [0, 100, 0],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 9,      "translation": [0, -100, 0],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 9,      "translation": [0, 0, 100],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 9,      "translation": [0, 0, -100],      "scale":[50,50,50]
+           "type": "model",      "mesh": 0,      "texture": 10,      "translation": [100, 0, 0],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 10,      "translation": [-100, 0, 0],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 10,      "translation": [0, 100, 0],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 10,      "translation": [0, -100, 0],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 10,      "translation": [0, 0, 100],      "scale":[50,50,50]    },    {      "type": "model",      "mesh": 0,      "texture": 10,      "translation": [0, 0, -100],      "scale":[50,50,50]
     },
     {
       "type": "model",
-      "mesh": 3,
-      "texture": 10,
+      "mesh": 1,
+      "texture": 11,
       "translation": [0, 0, 0],
       "scale": [2.5,2.5,2.5]
-    },
-    {
-      "type": "light",
-      "translation": [0, 0, 0]
     }
   
   ],
   "textures": [
-    "../../common/images/planet0.jpg",
-    "../../common/images/planet1.jpg",
-    "../../common/images/planet2.jpg",
-    "../../common/images/planet3.png",
-    "../../common/images/planet4.jpg",
-    "../../common/images/planet5.jpg",
-    "../../common/images/planet6.jpg",
-    "../../common/images/planet7.jpg",
-    "../../common/images/planet8.jpg",
+    "../../common/images/tex1.jpg",
+    "../../common/images/tex2.jpg",
+    "../../common/images/tex3.jpg",
+    "../../common/images/tex4.jpg",
+    "../../common/images/tex5.jpg",
+    "../../common/images/tex6.jpg",
+    "../../common/images/tex7.jpg",
+    "../../common/images/tex8.jpg",
+    "../../common/images/tex9.jpg",
+    "../../common/images/tex10.jpg",
     "../../common/images/skybox.png",
     "../../common/images/sunTexture.jpg",
-    "../../common/images/laserTexture.jpg"
-
-
+    "../../common/images/laserTexture.jpg",
+    "../../common/images/explozija.png"
 
   ],
   "meshes": [
     "../../common/models/cube.json",
-    "../../common/models/pyramid.json",
     "../../common/models/planet.json",
-    "../../common/models/sonce.json",
-    "../../common/models/cube3.json"
+    "../../common/models/eksplozija.json"
   ]
 }
